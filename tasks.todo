@@ -1,0 +1,7 @@
+✔ API Authentication @done(19-08-04 21:37)
+  ☐ User Registration
+    ☐ First & Last Name, Username, Email, Password, Mobile No, Family, DOB, Blood Group, Genotype, Bio Data
+    ☐ Subscription Type ( Free, Pass, Prime, Silver, Gold, Premium, Diamond)
+    ☐ User Type ( Doctor, Nurse, Pharmacists )
+  ☐ Auth Middleware Guards
+  ☐ User Login
