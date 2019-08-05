@@ -23,8 +23,7 @@ function validatePassword(req, res, next) {
                 // The user has proven that he or she is authorized to access the account associated with the provided email
                 next(); // Call the next middleware
             } else {
-                console.log("The passwords do not match ",
-                    password, "\n and provided password is ", providedPassword);
+                Respond(res).error(403, 'accountAuthenticationError', `A wrong email/username - password combination was provided.`, {});
             }
         })
         .catch(err => {
