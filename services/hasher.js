@@ -37,5 +37,4 @@ function encryptPassword(value, optionalSalt) {
   };
 }
 
-
 module.exports = (pass, optionalSalt) => encryptPassword(pass, optionalSalt);

@@ -24,7 +24,7 @@ function emailExists(req, res, next) {
 }
 
 function usernameExists(req, res, next) {
-    // Check if the provided mail by the user is already registered with an account
+    // Check if the provided email by the user is already registered with an account
     usersModel.find({
             username: req.body.username
         })
@@ -41,6 +41,7 @@ function usernameExists(req, res, next) {
 }
 
 function requiredFields(req, res, next) {
+    //Make sure the required fields has been provided, before proceeding to reguster the user
     const data = req.body;
     let firstName = data.firstname;
     let lastName = data.lastname;
@@ -84,24 +85,15 @@ function signup(req, res, next) {
     }
     usersModel.create(dataObj)
         .then(data => {
-            let savedData = {
-                firstname: data.firstname,
-                lastname: data.lastname,
-                username: data.username,
-                email: data.email,
-                mobilno: data.mobileno,
-                address: data.address,
-                state: data.state,
-                country: data.country,
-                dob: data.dob,
-                gender: data.gender
-            }
-            //SIgn an authentication token for the user
+            let savedData = data;
+            savedData = Object.assign(savedData)._doc;
+            delete savedData.password;
+            //Sign an authentication token for the user
             const token = jwt.sign({
-                firstname: data.firstname,
-                username: data.username,
-                email: data.email
-            }, data.email.split('').reverse().join(''), {
+                firstname: savedData.firstname,
+                username: savedData.username,
+                email: savedData.email
+            }, savedData.email.split('').reverse().join(''), {
                 expiresIn: '30d'
             }); //The email of the user spelt the reverse way is used as the JWT key
             req.data = savedData;
@@ -109,7 +101,7 @@ function signup(req, res, next) {
             next();
         })
         .catch(err => {
-            Respond(res).error(500, 'accountCreationError', `Could not create an account for ${data.data.email}`, err);
+            Respond(res).error(500, 'accountCreationError', `Could not create an account for ${req.body.email}`, err);
         })
 }
 
