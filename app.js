@@ -85,7 +85,7 @@ app.use('/api/v1/auth/', loginRoute);
 app.use('/api/v1/auth/', signupRoute);
 
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT;
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
