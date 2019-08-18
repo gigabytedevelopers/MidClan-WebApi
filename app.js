@@ -92,6 +92,3 @@ app.listen(port, () => {
 })
 
 module.exports = app;
-
-
-// Doctor, Nurse, Pharmacists, Hospital
