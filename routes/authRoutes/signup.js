@@ -5,10 +5,13 @@ const express = require('express');
 const app = express();
 
 const {
-    emailExists,
-    usernameExists,
-    requiredFields,
-    signup
+    userEmailExists,
+    userUsernameExists,
+    userSignup,
+    doctorEmailExists,
+    doctorUsernameExists,
+    doctorSignup,
+    requiredFields
 } = require('../../controllers/authcontrollers/signup');
 const Respond = require('../../services/responses');
 
@@ -19,7 +22,14 @@ app.get('/signup/test', (req, res, next) => {
     })
 });
 
-app.post('/signup', emailExists, usernameExists, requiredFields, signup, (req, res, next) => {
+app.post('/signup/user', userEmailExists, userUsernameExists, requiredFields, userSignup, (req, res, next) => {
+    Respond(res).success({
+        data: req.data,
+        token: req.token
+    })
+})
+
+app.post('/signup/doctor', doctorEmailExists, doctorUsernameExists, requiredFields, doctorSignup, (req, res, next) => {
     Respond(res).success({
         data: req.data,
         token: req.token

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
+const pharmacistSchema = new mongoose.Schema({
     firstname: {
         type: String,
         required: true,
@@ -28,11 +28,62 @@ const userSchema = new mongoose.Schema({
     },
     mobileno: {
         type: Number,
+        required: true,
         trim: true,
         default: 0,
     },
     dob: {
         type: String,
+        trim: true,
+        default: ''
+    },
+    state: {
+        type: String,
+        trim: true,
+        default: ''
+    },
+    lga: {
+        type: String,
+        trim: true,
+        default: ''
+    },
+    college: {
+        type: String,
+        trim: true,
+        default: ''
+    },
+    university: {
+        type: String,
+        trim: true,
+        default: ''
+    },
+    almamata: {
+        type: String,
+        trim: true,
+        default: ''
+    },
+    referee: {
+        type: String,
+        trim: true,
+        default: ''
+    },
+    biodata: {
+        type: String,
+        trim: true,
+        default: ''
+    },
+    patientlist: {
+        type: Array,
+        trim: true,
+        default: ''
+    },
+    medicalcases: {
+        type: Array,
+        trim: true,
+        default: ''
+    },
+    prescriptioncases: {
+        type: Array,
         trim: true,
         default: ''
     },
@@ -77,4 +128,4 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Users', userSchema);
+module.exports = mongoose.model('Pharmacists', pharmacistSchema);

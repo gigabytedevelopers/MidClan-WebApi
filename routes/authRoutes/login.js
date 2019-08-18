@@ -6,7 +6,8 @@ const app = express();
 const Respond = require('../../services/responses');
 
 const {
-    validatePassword,
+    validateUserPassword,
+    validateDoctorPassword,
     generateToken
 } = require('../../controllers/authcontrollers/login');
 
@@ -17,7 +18,14 @@ app.get('/test', (req, res, next) => {
     })
 });
 
-app.post('/login', validatePassword, generateToken, (req, res, next) => {
+app.post('/login/user', validateUserPassword, generateToken, (req, res, next) => {
+    Respond(res).success({
+        data: req.data,
+        token: req.token
+    })
+})
+
+app.post('/login/doctor', validateDoctorPassword, generateToken, (req, res, next) => {
     Respond(res).success({
         data: req.data,
         token: req.token

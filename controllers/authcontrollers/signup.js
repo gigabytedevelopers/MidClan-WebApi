@@ -2,42 +2,47 @@
  * @description - This module is a middleware that handles account login authentications
  */
 const usersModel = require('../../models/users');
+const doctorsModel = require('../../models/doctors');
 const Respond = require('../../services/responses');
 const hasher = require('../../services/hasher');
 const jwt = require('jsonwebtoken');
 
-function emailExists(req, res, next) {
-    // Check if the provided mail by the user is already registered with an account
-    usersModel.find({
-            email: req.body.email
-        })
-        .then(data => {
-            if (data.length > 0) { // If a user with the provided email already exists 
-                Respond(res).error(500, 'accountCreationError', `A user has already been registered with the email  <b>${req.data.email}</b>`, '')
-            } else {
-                next();
-            }
-        })
-        .catch(err => {
-            Respond(res).error(500, 'accountCreationError', `A user has already been registered with the email ${req.body.email}`, err);
-        })
+function emailExists(model){
+    return function (req, res, next) {
+        // Check if the provided mail by the user is already registered with an account
+        model.find({
+                email: req.body.email
+            })
+            .then(data => {
+                if (data.length > 0) { // If a user with the provided email already exists 
+                    Respond(res).error(500, 'accountCreationError', `A user has already been registered with the email  <b>${req.data.email}</b>`, '')
+                } else {
+                    next();
+                }
+            })
+            .catch(err => {
+                Respond(res).error(500, 'accountCreationError', `A user has already been registered with the email ${req.body.email}`, err);
+            })
+    }
 }
 
-function usernameExists(req, res, next) {
-    // Check if the provided email by the user is already registered with an account
-    usersModel.find({
-            username: req.body.username
-        })
-        .then(data => {
-            if (data.length > 0) { // If a user with the provided email already exists 
-                Respond(res).error(500, 'accountCreationError', `A user has already been registered with the username <b> ${req.data.username}</b>`, '')
-            } else {
-                next();
-            }
-        })
-        .catch(err => {
-            Respond(res).error(500, 'accountCreationError', `Could not create an account for ${req.body.username}`, err);
-        })
+function usernameExists(model){
+    return function (req, res, next) {
+        // Check if the provided email by the user is already registered with an account
+        model.find({
+                username: req.body.username
+            })
+            .then(data => {
+                if (data.length > 0) { // If a user with the provided email already exists 
+                    Respond(res).error(500, 'accountCreationError', `A user has already been registered with the username <b> ${req.data.username}</b>`, '')
+                } else {
+                    next();
+                }
+            })
+            .catch(err => {
+                Respond(res).error(500, 'accountCreationError', `Could not create an account for ${req.body.username}`, err);
+            })
+    }
 }
 
 function requiredFields(req, res, next) {
@@ -57,57 +62,66 @@ function requiredFields(req, res, next) {
     }
 }
 
-function signup(req, res, next) {
-    const data = req.body;
-    let firstname = data.firstname;
-    let lastname = data.lastname;
-    let username = data.username;
-    let email = data.email;
-    let mobileno = data.mobileno;
-    let address = data.address;
-    let state = data.state;
-    let country = data.country;
-    let dob = data.dob;
-    let gender = data.gender;
-    let password = hasher(data.password, data.email).hash //The password is always hashed using the email as the salt
-    let dataObj = { // This is done so, other information that are not needed won't b saved in the database
-        firstname,
-        lastname,
-        username,
-        email,
-        mobileno,
-        address,
-        state,
-        country,
-        dob,
-        gender,
-        password,
+let userObj = { // This is done so, other information that are not needed won't b saved in the database
+            firstname: '',
+            lastname: '',
+            username: '',
+            email: '',
+            mobileno: '',
+            address: '',
+            state: '',
+            country: '',
+            dob: '',
+            gender: '',
+            password: '',
+        }
+
+function signUp(model, obj){
+    return function (req, res, next) {
+        const data = req.body;
+        obj.firstname = data.firstname;
+        obj.lastname = data.lastname;
+        obj.username = data.username;
+        obj.email = data.email;
+        obj.mobileno = data.mobileno;
+        obj.address = data.address;
+        obj.state = data.state;
+        obj.country = data.country;
+        obj.dob = data.dob;
+        obj.gender = data.gender;
+        obj.password = hasher(data.password, data.email).hash //The password is always hashed using the email as the salt
+        model.create(obj)
+            .then(data => {
+                let savedData = data;
+                savedData = Object.assign(savedData)._doc;
+                delete savedData.password;
+                //Sign an authentication token for the user
+                const token = jwt.sign({
+                    firstname: savedData.firstname,
+                    username: savedData.username,
+                    email: savedData.email
+                }, savedData.email.split('').reverse().join(''), {
+                    expiresIn: '30d'
+                }); //The email of the user spelt the reverse way is used as the JWT key
+                req.data = savedData;
+                req.token = token;
+                next();
+            })
+            .catch(err => {
+                Respond(res).error(500, 'accountCreationError', `Could not create an account for ${req.body.email}`, err);
+            })
     }
-    usersModel.create(dataObj)
-        .then(data => {
-            let savedData = data;
-            savedData = Object.assign(savedData)._doc;
-            delete savedData.password;
-            //Sign an authentication token for the user
-            const token = jwt.sign({
-                firstname: savedData.firstname,
-                username: savedData.username,
-                email: savedData.email
-            }, savedData.email.split('').reverse().join(''), {
-                expiresIn: '30d'
-            }); //The email of the user spelt the reverse way is used as the JWT key
-            req.data = savedData;
-            req.token = token;
-            next();
-        })
-        .catch(err => {
-            Respond(res).error(500, 'accountCreationError', `Could not create an account for ${req.body.email}`, err);
-        })
 }
 
 module.exports = {
-    emailExists,
-    usernameExists,
-    requiredFields,
-    signup
+    //For users signing up
+    userEmailExists: emailExists(usersModel),
+    userUsernameExists: usernameExists(usersModel),
+    userSignup: signUp(usersModel, userObj),
+    //doctors signing up
+    doctorEmailExists: emailExists(doctorsModel),
+    doctorUsernameExists: usernameExists(doctorsModel),
+    doctorSignup: signUp(doctorsModel, userObj),
+    //Essential fields
+    requiredFields
 };
