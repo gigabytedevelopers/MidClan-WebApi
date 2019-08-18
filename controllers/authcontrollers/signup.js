@@ -3,6 +3,8 @@
  */
 const usersModel = require('../../models/users');
 const doctorsModel = require('../../models/doctors');
+const pharmacistsModel = require('../../models/pharmacists');
+const labTechModel = require('../../models/labTechnicians');
 const Respond = require('../../services/responses');
 const hasher = require('../../services/hasher');
 const jwt = require('jsonwebtoken');
@@ -122,6 +124,14 @@ module.exports = {
     doctorEmailExists: emailExists(doctorsModel),
     doctorUsernameExists: usernameExists(doctorsModel),
     doctorSignup: signUp(doctorsModel, userObj),
+    //pharmacists signing up pharmacistsModel
+    pharmacistEmailExists: emailExists(pharmacistsModel),
+    pharmacistUsernameExists: usernameExists(pharmacistsModel),
+    pharmacistSignup: signUp(pharmacistsModel, userObj),
+    // Lab technicians
+    labTechEmailExists: emailExists(labTechModel),
+    labTechUsernameExists: usernameExists(labTechModel),
+    labTechSignup: signUp(labTechModel, userObj),
     //Essential fields
     requiredFields
 };

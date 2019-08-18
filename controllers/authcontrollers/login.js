@@ -3,6 +3,8 @@
  */
 const usersModel = require('../../models/users');
 const doctorsModel = require('../../models/doctors');
+const pharmacistsModel = require('../../models/pharmacists');
+const labTechModel = require('../../models/labTechnicians');
 const Respond = require('../../services/responses');
 const hasher = require('../../services/hasher');
 const jwt = require('jsonwebtoken');
@@ -57,5 +59,7 @@ function generateToken(req, res, next) {
 module.exports = {
     validateUserPassword: validatePassword(usersModel),
     validateDoctorPassword: validatePassword(doctorsModel),
+    validatePharmacistPassword: validatePassword(pharmacistsModel),
+    validateLabTechPassword: validatePassword(pharmacistsModel),
     generateToken
 };

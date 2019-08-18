@@ -8,6 +8,8 @@ const Respond = require('../../services/responses');
 const {
     validateUserPassword,
     validateDoctorPassword,
+    validatePharmacistPassword,
+    validateLabTechPassword,
     generateToken
 } = require('../../controllers/authcontrollers/login');
 
@@ -26,6 +28,20 @@ app.post('/login/user', validateUserPassword, generateToken, (req, res, next) =>
 })
 
 app.post('/login/doctor', validateDoctorPassword, generateToken, (req, res, next) => {
+    Respond(res).success({
+        data: req.data,
+        token: req.token
+    })
+})
+
+app.post('/login/pharmacist', validatePharmacistPassword, generateToken, (req, res, next) => {
+    Respond(res).success({
+        data: req.data,
+        token: req.token
+    })
+})
+
+app.post('/login/labtech', validateLabTechPassword, generateToken, (req, res, next) => {
     Respond(res).success({
         data: req.data,
         token: req.token
