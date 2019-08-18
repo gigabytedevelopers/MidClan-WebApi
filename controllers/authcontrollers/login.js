@@ -2,33 +2,38 @@
  * @description - This module is a middleware that handles account login authentications
  */
 const usersModel = require('../../models/users');
+const doctorsModel = require('../../models/doctors');
+const pharmacistsModel = require('../../models/pharmacists');
+const labTechModel = require('../../models/labTechnicians');
 const Respond = require('../../services/responses');
 const hasher = require('../../services/hasher');
 const jwt = require('jsonwebtoken');
 
-function validatePassword(req, res, next) {
-    let data = req.body;
-    let email = data.email;
-    let password = data.password;
-    // Check if the provided email is associated to any of the accounts
-    usersModel.find({
-            email: email
-        })
-        .then(fetchedData => {
-            fetchedData = fetchedData[0];
-            req.userData = fetchedData;
-            let password = fetchedData.password;
-            let providedPassword = hasher(data.password, data.email).hash;
-            if (password === providedPassword) {
-                // The user has proven that he or she is authorized to access the account associated with the provided email
-                next(); // Call the next middleware
-            } else {
-                Respond(res).error(403, 'accountAuthenticationError', `A wrong email/username - password combination was provided.`, {});
-            }
-        })
-        .catch(err => {
-            console.log("An error occured ", err);
-        })
+function validatePassword(model){
+    return function(req, res, next) {
+        let data = req.body;
+        let email = data.email;
+        let password = data.password;
+        // Check if the provided email is associated to any of the accounts
+        model.find({
+                email: email
+            })
+            .then(fetchedData => {
+                fetchedData = fetchedData[0];
+                req.userData = fetchedData;
+                let password = fetchedData.password;
+                let providedPassword = hasher(data.password, data.email).hash;
+                if (password === providedPassword) {
+                    // The user has proven that he or she is authorized to access the account associated with the provided email
+                    next(); // Call the next middleware
+                } else {
+                    Respond(res).error(403, 'accountAuthenticationError', `A wrong email/username - password combination was provided.`, {});
+                }
+            })
+            .catch(err => {
+                console.log("An error occured ", err);
+            })
+    }
 }
 
 function generateToken(req, res, next) {
@@ -52,6 +57,9 @@ function generateToken(req, res, next) {
 }
 
 module.exports = {
-    validatePassword,
+    validateUserPassword: validatePassword(usersModel),
+    validateDoctorPassword: validatePassword(doctorsModel),
+    validatePharmacistPassword: validatePassword(pharmacistsModel),
+    validateLabTechPassword: validatePassword(pharmacistsModel),
     generateToken
 };
