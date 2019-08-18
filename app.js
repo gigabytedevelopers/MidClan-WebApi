@@ -84,8 +84,8 @@ app.use((req, res, next) => {
 app.use('/api/v1/auth/', loginRoute);
 app.use('/api/v1/auth/', signupRoute);
 
-
-const port = process.env.PORT || 8000;
+// we're removing the optional static port cause of heroku dynamic port assignment
+const port = process.env.PORT;
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

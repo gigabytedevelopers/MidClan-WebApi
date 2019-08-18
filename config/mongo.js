@@ -1,8 +1,8 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-
-const url = app.get('env') == "production" ? true /*Atlas url here */ : "mongodb://localhost:27017/MidClan-Api";
+// in .env define MONGODB_URI="mongodb://heroku_lrt6r3tx:md64rsngoqneflgib1pkdbel84@ds155577.mlab.com:55577/heroku_lrt6r3tx"
+const url = app.get('env') == "production" ? process.env.MONGODB_URI : "mongodb://localhost:27017/MidClan-Api";
 
 console.log("Environment is ", app.get('env'));
 
