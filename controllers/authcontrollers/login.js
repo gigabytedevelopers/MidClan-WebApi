@@ -31,7 +31,7 @@ function validatePassword(model){
                 }
             })
             .catch(err => {
-                console.log("An error occured ", err);
+                Respond(res).error(403, 'accountAuthenticationError', `A wrong email/username - password combination was provided.`, {});
             })
     }
 }
