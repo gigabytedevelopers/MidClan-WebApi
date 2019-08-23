@@ -113,7 +113,7 @@ All requests made to the server should always be in the format
 <base-url>/api/v1/auth/<route>
 ```
 
-The base-url for the Auth Server is `https://midclan-api.herokuapp.com/`
+The base-url for the Auth Server is `https://midclan-webapi.herokuapp.com`
 
 #### Signup 
 To signup, a `POST` request with a body that has the following fields must be sent to the server
