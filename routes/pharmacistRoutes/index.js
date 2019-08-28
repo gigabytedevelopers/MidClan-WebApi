@@ -1,11 +1,11 @@
-var express = require('express');
-var app = express.Router();
+const express = require('express');
+const app = express.Router();
 
-var PharmacistController = require('../../controllers/pharmacists/pharmacistController');
-var Auth = require('../../middlewares/Authentication');
+const PharmacistController = require('../../controllers/pharmacists/pharmacistController');
+const Auth = require('../../middlewares/Authentication');
 
-/* GET all users. */
 app.get('/all', Auth.checkToken, PharmacistController.getAllPharmacists);
 app.get('/profile/:id', Auth.checkToken, PharmacistController.getSinglePharmacist);
+app.get('/profile', Auth.checkToken, PharmacistController.getAuthPharmacistProfile);
 
 module.exports = app;
