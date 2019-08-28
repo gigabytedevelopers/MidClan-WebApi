@@ -1,0 +1,6 @@
+/**
+ * We're currently having repeated functions in the individual files
+ * this is mostly in preparation for scaling.
+ * we want to have structure as component-based as possible.
+ * Better ways to achieve this are welcomed. just make a PR 😁
+ */

@@ -31,6 +31,18 @@ class DoctorController {
         }
         return Respond(res).error(400, 'mongooseModelError', 'Invalid ID format')
     }
+    /**
+     * get authenticated doctor's profile
+     * @param  {object} req [request object]
+     * @param  {object} res [response object]
+     * @return {json}
+     */
+    static async getAuthDoctorProfile (req, res) {
+        const { user } = req;
+        user
+            ? Respond(res).success({ data: user })
+            : Respond(res).error(401, 'authenticationError', 'Unauthenticated')
+    }
 }
 
 module.exports = DoctorController;

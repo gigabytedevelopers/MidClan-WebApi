@@ -1,10 +1,11 @@
-var express = require('express');
-var app = express.Router();
+const express = require('express');
+const app = express.Router();
 
-var UserController = require('../../controllers/users/userController');
-var Auth = require('../../middlewares/Authentication');
+const UserController = require('../../controllers/users/userController');
+const Auth = require('../../middlewares/Authentication');
 
 app.get('/all', Auth.checkToken, UserController.getAllUsers);
 app.get('/profile/:id', Auth.checkToken, UserController.getSingleUser);
+app.get('/profile', Auth.checkToken, UserController.getAuthUserProfile);
 
 module.exports = app;

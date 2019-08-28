@@ -103,3 +103,37 @@
 }
 ```
 
+--------------------------------------------
+
+### Get Active User Profile
+
+- Endpoint: `/api/v1/users/profile/`
+    - Action: `GET`
+    - HEADERS: `{'Authorization': 'Bearer YOUR_TOKEN', 'Content-Type': 'application/json'}` 
+    - RESPONSE:
+```json
+{
+  "success": true,
+  "payload": {
+    "data": {
+      "firstname": "Samuel",
+      "lastname": "Peter",
+      "username": "Kratin",
+      "email": "krat@gmail.com",
+      "mobileno": 0,
+      "dob": "",
+      "gender": "",
+      "bloodgroup": "",
+      "genotype": "",
+      "height": "",
+      "weight": "",
+      "bp": "",
+      "password": "3ac715db52bf2dc61de9d1f71e6e80374058accec861975717b3c6e511d9776bebd3e10590ee1481cae116cf2ccf2b0496a6d17993ee02088bb7c47d88a206b8",
+      "_id": "5d65d18477cdd1ce4d9d8b6a",
+      "created": "2019-08-28T00:57:40.890Z",
+      "__v": 0
+    }
+  }
+}
+```
+
