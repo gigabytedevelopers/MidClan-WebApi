@@ -14,7 +14,7 @@ const corsConfig = require("./config/cors");
 const Respond = require('./services/responses');
 
 
-var indexRouter = require('./routes/index');
+var indexRoute = require('./routes/index');
 // var usersRouter = require('./routes/users');
 
 var app = express();
@@ -79,6 +79,7 @@ app.use((req, res, next) => {
 // Routes are enabled below
 
 // Authentication Routes
+app.use('/', indexRoute);
 app.use('/api/v1/auth/', loginRoute);
 app.use('/api/v1/auth/', signupRoute);
 app.use('/api/v1/users/', usersRoute);
