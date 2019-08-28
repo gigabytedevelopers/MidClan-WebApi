@@ -9,11 +9,13 @@ const Respond = require('../../services/responses');
 const hasher = require('../../services/hasher');
 const jwt = require('jsonwebtoken');
 
-function validatePassword(model){
+function validatePassword(model) {
     return function(req, res, next) {
         let data = req.body;
         let email = data.email;
         let password = data.password;
+        // check if email & password was provided
+        if (!email || !password) return Respond(res).error(400, 'accountAuthenticationError', 'email or password not provided', {});
         // Check if the provided email is associated to any of the accounts
         model.find({
                 email: email
@@ -40,12 +42,20 @@ function generateToken(req, res, next) {
     // This function generates an authentication token for an already veriified user who is about to log into his/her account
     let data = req.userData;
     const token = jwt.sign({
+        _id: data._id,
+        firstname: data.firstname,
+        username: data.username,
+        email: data.email
+    }, process.env.JWT_SECRET, {
+        expiresIn: '30d'
+    });
+    /* const token = jwt.sign({
         firstname: data.firstname,
         username: data.username,
         email: data.email
     }, data.email.split('').reverse().join(''), {
         expiresIn: '30d'
-    }); //The email of the user spelt the reverse way is used as the JWT key
+    }); */ //The email of the user spelt the reverse way is used as the JWT key
 
     // Delete password from the data to be returned to the user
     let savedData = Object.assign(data)._doc

@@ -16,7 +16,7 @@ function emailExists(model){
                 email: req.body.email
             })
             .then(data => {
-                if (data.length > 0) { // If a user with the provided email already exists 
+                if (data.length > 0) { // If a user with the provided email already exists
                     Respond(res).error(500, 'accountCreationError', `A user has already been registered with the email  <b>${req.data.email}</b>`, '')
                 } else {
                     next();
@@ -35,7 +35,7 @@ function usernameExists(model){
                 username: req.body.username
             })
             .then(data => {
-                if (data.length > 0) { // If a user with the provided email already exists 
+                if (data.length > 0) { // If a user with the provided email already exists
                     Respond(res).error(500, 'accountCreationError', `A user has already been registered with the username <b> ${req.data.username}</b>`, '')
                 } else {
                     next();
@@ -56,11 +56,11 @@ function requiredFields(req, res, next) {
     let email = data.email;
     let password = data.password;
     if (!firstName || !lastName || !username || !email || !password) {
-        Respond(res).error(500, 'accountCreationError', `fullname, lastname, username, email and passwords must be provided`, '')
+        Respond(res).error(500, 'accountCreationError', `firstname, lastname, username, email and passwords must be provided`, '')
     } else if (firstName !== '' && lastName !== '' && username !== '' && email !== '' && password !== '') {
         next();
     } else {
-        Respond(res).error(500, 'accountCreationError', `fullname, lastname, username, email and passwords must be provided`, '')
+        Respond(res).error(500, 'accountCreationError', `firstname, lastname, username, email and passwords must be provided`, '')
     }
 }
 
@@ -102,9 +102,16 @@ function signUp(model, obj){
                     firstname: savedData.firstname,
                     username: savedData.username,
                     email: savedData.email
+                }, process.env.JWT_SECRET, {
+                    expiresIn: '30d'
+                });
+                /*const token = jwt.sign({
+                    firstname: savedData.firstname,
+                    username: savedData.username,
+                    email: savedData.email
                 }, savedData.email.split('').reverse().join(''), {
                     expiresIn: '30d'
-                }); //The email of the user spelt the reverse way is used as the JWT key
+                }); */ //The email of the user spelt the reverse way is used as the JWT key
                 req.data = savedData;
                 req.token = token;
                 next();

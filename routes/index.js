@@ -1,9 +1,12 @@
 var express = require('express');
-var router = express.Router();
+var app = express();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+app.get('/', function(req, res, next) {
+  res.status(200).json({
+    success: true,
+    message: 'welcome to MidClan API'
+  });
 });
 
-module.exports = router;
+module.exports = app;
