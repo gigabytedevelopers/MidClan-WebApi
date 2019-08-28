@@ -15,7 +15,8 @@ mongoose.connect(url, {
 mongoose.set('useCreateIndex', true);
 
 process.on('exit', () => {
-    mongoose.close();
+    // mongoose.close();
+    mongoose.connection.close();
 })
 
 

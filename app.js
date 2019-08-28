@@ -11,15 +11,21 @@ const bodyParser = require("body-parser");
 const customEnv = require("custom-env").env();
 const cors = require("cors");
 const corsConfig = require("./config/cors");
+const Respond = require('./services/responses');
+
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// var usersRouter = require('./routes/users');
 
 var app = express();
 
 // Routes
 const loginRoute = require('./routes/authRoutes/login');
 const signupRoute = require('./routes/authRoutes/signup');
+const usersRoute = require('./routes/userRoutes/index');
+const pharmacistsRoute = require('./routes/pharmacistRoutes/index');
+const techniciansRoute = require('./routes/technicianRoutes/index');
+const doctorsRoute = require('./routes/doctorRoutes/index');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -43,14 +49,6 @@ app.use(bodyParser.json());
 app.use(express.json());
 
 require('./config/mongo'); //connect to mongo database
-
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter);
-
-// catch 404 and forward to error handler
-// app.use(function (req, res, next) {
-//   next(createError(404));
-// });
 
 // error handler
 app.use(function (err, req, res, next) {
@@ -83,9 +81,24 @@ app.use((req, res, next) => {
 // Authentication Routes
 app.use('/api/v1/auth/', loginRoute);
 app.use('/api/v1/auth/', signupRoute);
+app.use('/api/v1/users/', usersRoute);
+app.use('/api/v1/pharmacists/', pharmacistsRoute);
+app.use('/api/v1/technicians/', techniciansRoute);
+app.use('/api/v1/doctors/', doctorsRoute);
 
-// we're removing the optional static port cause of heroku dynamic port assignment
-const port = process.env.PORT;
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  // next(createError(404));
+  next(Respond(res).error(404, 'RouteNotFound', 'This is the end of the earth'));
+});
+
+// refactored to work on both dev and prod.
+let port;
+if (app.get('env') === 'development') {
+  port = 3000 || process.env.PORT;
+} else {
+  port = process.env.PORT;
+}
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
