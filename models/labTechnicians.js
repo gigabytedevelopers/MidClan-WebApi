@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const labTechnicianSchema = new mongoose.Schema({
+const LabTechnicianSchema = new mongoose.Schema({
     firstname: {
         type: String,
         required: true,
@@ -31,6 +31,10 @@ const labTechnicianSchema = new mongoose.Schema({
         required: true,
         trim: true,
         default: 0,
+    },
+    profilepicture: {
+        type: String,
+        default: 'https://image.freepik.com/free-photo/blue-orange-cactus-vase-isolated_6607-236.jpg'
     },
     dob: {
         type: String,
@@ -133,4 +137,4 @@ const labTechnicianSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('LabTechnicians', labTechnicianSchema);
+module.exports = mongoose.model('LabTechnicians', LabTechnicianSchema);

@@ -1,4 +1,4 @@
-# Doctors Endpoints
+# Doctors Endpoints 💉
 ======================================
 
 `BASE_URL: https://midclan-api.herokuapp.com/`

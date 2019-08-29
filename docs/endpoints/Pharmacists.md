@@ -1,4 +1,4 @@
-# Pharmacist Endpoints
+# Pharmacist Endpoints 💊
 ======================================
 
 `BASE_URL: https://midclan-api.herokuapp.com/`
