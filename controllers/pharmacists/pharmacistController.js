@@ -1,16 +1,16 @@
 const Respond = require('../../services/responses');
-const pharmacistModel = require('../../models/pharmacists');
+const PharmacistModel = require('../../models/pharmacists');
 const mongooseHandler = require('../../utilities/mongooseHandler');
 
 class PharmacistController {
     /**
-     * get all technicians
+     * get all pharmacists
      * @param  {object} req
      * @param  {object} res
      * @return {json}
      */
     static async getAllPharmacists(req, res) {
-        const pharmacists = await pharmacistModel.find().then(data => data);
+        const pharmacists = await PharmacistModel.find().then(data => data);
         return Respond(res).success({ data: pharmacists });
     }
     /**
@@ -19,11 +19,11 @@ class PharmacistController {
      * @param  {object} res [response object]
      * @return {json}
      */
-    static async getSinglePharmacist(req, res) {
+    static async getSinglePharmacist (req, res) {
         const { id } = req.params;
         if (mongooseHandler.checkIsValidID(id)) {
             // find user by ID
-            const pharmacist = await pharmacistModel.findOne({ _id: id }).then(data => data);
+            const pharmacist = await PharmacistModel.findOne({ _id: id }).then(data => data);
             if (!pharmacist) {
                 Respond(res).error(404, 'userRetrievalError', `User not found`)
             }

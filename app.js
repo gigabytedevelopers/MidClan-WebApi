@@ -2,11 +2,11 @@
  * @package - MidClan - WebApi
  * @description - This is the Web  API for the MidClan project
  */
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const bodyParser = require("body-parser");
 const customEnv = require("custom-env").env();
 const cors = require("cors");
@@ -14,10 +14,10 @@ const corsConfig = require("./config/cors");
 const Respond = require('./services/responses');
 
 
-var indexRoute = require('./routes/index');
+const indexRoute = require('./routes/index');
 // var usersRouter = require('./routes/users');
 
-var app = express();
+const app = express();
 
 // Routes
 const loginRoute = require('./routes/authRoutes/login');
@@ -26,6 +26,7 @@ const usersRoute = require('./routes/userRoutes/index');
 const pharmacistsRoute = require('./routes/pharmacistRoutes/index');
 const techniciansRoute = require('./routes/technicianRoutes/index');
 const doctorsRoute = require('./routes/doctorRoutes/index');
+const postsRoute = require('./routes/postRoutes/index');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -86,6 +87,7 @@ app.use('/api/v1/users/', usersRoute);
 app.use('/api/v1/pharmacists/', pharmacistsRoute);
 app.use('/api/v1/technicians/', techniciansRoute);
 app.use('/api/v1/doctors/', doctorsRoute);
+app.use('/api/v1/posts/', postsRoute);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

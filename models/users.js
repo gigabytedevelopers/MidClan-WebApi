@@ -31,6 +31,10 @@ const userSchema = new mongoose.Schema({
         trim: true,
         default: 0,
     },
+    profilepicture: {
+        type: String,
+        default: 'https://image.freepik.com/free-photo/blue-orange-cactus-vase-isolated_6607-236.jpg'
+    },
     dob: {
         type: String,
         trim: true,
