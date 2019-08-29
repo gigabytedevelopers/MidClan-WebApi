@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express.Router();
 
-var DoctorController = require('../../controllers/doctors/doctorController');
+var DoctorController = require('../../controllers/doctors/DoctorController');
 var Auth = require('../../middlewares/Authentication');
 
 app.get('/all', Auth.checkToken, DoctorController.getAllDoctors);

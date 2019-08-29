@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express.Router();
 
-const PharmacistController = require('../../controllers/pharmacists/pharmacistController');
+const PharmacistController = require('../../controllers/pharmacists/PharmacistController');
 const Auth = require('../../middlewares/Authentication');
 
 app.get('/all', Auth.checkToken, PharmacistController.getAllPharmacists);

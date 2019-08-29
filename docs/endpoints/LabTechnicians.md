@@ -1,4 +1,4 @@
-# Lab Technicians Endpoints
+# Lab Technicians Endpoints 🏷
 ======================================
 
 `BASE_URL: https://midclan-api.herokuapp.com/`
