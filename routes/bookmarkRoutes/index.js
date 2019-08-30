@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express.Router();
 
-const BookmarkController = require('../../controllers/bookmark/BookmarkController');
+const BookmarkController = require('../../controllers/bookmark/bookmarkController');
 const Auth = require('../../middlewares/Authentication');
 // endpoints
 app.get('/all', Auth.checkToken, BookmarkController.getAllBookmarks);

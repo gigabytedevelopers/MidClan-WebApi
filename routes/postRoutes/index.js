@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express.Router();
 
-const PostController = require('../../controllers/posts/PostController');
+const PostController = require('../../controllers/posts/postController');
 const Auth = require('../../middlewares/Authentication');
 // endpoints
 app.get('/all', Auth.checkToken, PostController.getAllPosts);

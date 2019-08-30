@@ -1,6 +1,5 @@
 const Respond = require('../../services/responses');
-const PostModel = require('../../models/Post');
-const UserModel = require('../../models/users');
+const PostModel = require('../../models/post');
 const mongooseHandler = require('../../utilities/mongooseHandler');
 
 class BookmarkController {
