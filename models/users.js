@@ -70,6 +70,9 @@ const userSchema = new mongoose.Schema({
         trim: true,
         default: ''
     },
+    bookmarks: {
+        type: Array,
+    },
     password: {
         type: String,
         required: true,

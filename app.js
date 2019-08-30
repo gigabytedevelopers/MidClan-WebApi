@@ -27,6 +27,10 @@ const pharmacistsRoute = require('./routes/pharmacistRoutes/index');
 const techniciansRoute = require('./routes/technicianRoutes/index');
 const doctorsRoute = require('./routes/doctorRoutes/index');
 const postsRoute = require('./routes/postRoutes/index');
+<<<<<<< HEAD
+const bookmarkRoute = require('./routes/bookmarkRoutes/index');
+=======
+>>>>>>> aee010e... feat(posts): add all operations for posts
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -88,6 +92,7 @@ app.use('/api/v1/pharmacists/', pharmacistsRoute);
 app.use('/api/v1/technicians/', techniciansRoute);
 app.use('/api/v1/doctors/', doctorsRoute);
 app.use('/api/v1/posts/', postsRoute);
+app.use('/api/v1/bookmark/', bookmarkRoute);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
