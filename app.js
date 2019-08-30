@@ -28,9 +28,12 @@ const techniciansRoute = require('./routes/technicianRoutes/index');
 const doctorsRoute = require('./routes/doctorRoutes/index');
 const postsRoute = require('./routes/postRoutes/index');
 <<<<<<< HEAD
+<<<<<<< HEAD
 const bookmarkRoute = require('./routes/bookmarkRoutes/index');
 =======
 >>>>>>> aee010e... feat(posts): add all operations for posts
+=======
+>>>>>>> a74806aacb3c8ed5925215c359bb953dab7ef41a
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
