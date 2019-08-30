@@ -79,7 +79,7 @@
 > bookmark a post / add a post to bookmark
 > Response: array of bookmarks after adding.
 
-- Endpoint: `/api/v1/posts/comments/create`
+- Endpoint: `/api/v1/bookmark/add`
     - Action: `POST`
     - HEADERS: `{'Authorization': 'Bearer YOUR_TOKEN', 'Content-Type': 'application/json'}` 
     - PARAMS:
