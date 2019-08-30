@@ -178,7 +178,7 @@
 ```json
 {
     "postId": "5d6752c5ea629f83220688c9",
-    "title": "THIS UPDATE IS GREAT"
+    "title": "THIS UPDATE IS GREAT",
     "body": "this too",
 }
 ```
@@ -212,6 +212,4 @@
   }
 }
 ```
-
-
 
