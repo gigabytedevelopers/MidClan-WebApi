@@ -1,8 +1,8 @@
 const express = require('express');
 const app = express.Router();
 
-const PostController = require('../../controllers/posts/PostController');
-const Auth = require('../../middlewares/Authentication');
+const PostController = require('../../controllers/posts/postController');
+const Auth = require('../../middlewares/authentication');
 // endpoints
 app.get('/all', Auth.checkToken, PostController.getAllPosts);
 app.post('/create', Auth.checkToken, PostController.createNewPost);

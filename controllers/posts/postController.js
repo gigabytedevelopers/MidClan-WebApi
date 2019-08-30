@@ -1,5 +1,5 @@
 const Respond = require('../../services/responses');
-const PostModel = require('../../models/Post');
+const PostModel = require('../../models/post');
 const mongooseHandler = require('../../utilities/mongooseHandler');
 
 class PostController {
