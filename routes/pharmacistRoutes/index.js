@@ -2,7 +2,7 @@ const express = require('express');
 const app = express.Router();
 
 const PharmacistController = require('../../controllers/pharmacists/pharmacistController');
-const Auth = require('../../middlewares/authentication');
+const Auth = require('../../middlewares/Authentication');
 
 app.get('/all', Auth.checkToken, PharmacistController.getAllPharmacists);
 app.get('/profile/:id', Auth.checkToken, PharmacistController.getSinglePharmacist);

@@ -2,7 +2,7 @@ const express = require('express');
 const app = express.Router();
 
 const UserController = require('../../controllers/users/userController');
-const Auth = require('../../middlewares/authentication');
+const Auth = require('../../middlewares/Authentication');
 
 app.get('/all', Auth.checkToken, UserController.getAllUsers);
 app.get('/profile/:id', Auth.checkToken, UserController.getSingleUser);
