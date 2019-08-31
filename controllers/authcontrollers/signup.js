@@ -49,13 +49,9 @@ function usernameExists(model){
 
 function requiredFields(req, res, next) {
     //Make sure the required fields has been provided, before proceeding to reguster the user
-    const data = req.body;
-    let firstName = data.firstname;
-    let lastName = data.lastname;
-    let username = data.username;
-    let email = data.email;
-    let password = data.password;
-    if (!firstName || !lastName || !username || !email || !password) {
+    const { firstname, lastname, username, email, password } = req.body;
+
+    if (!firstname || !lastname || !username || !email || !password) {
         Respond(res).error(500, 'accountCreationError', `firstname, lastname, username, email and passwords must be provided`, '')
     } else if (firstName !== '' && lastName !== '' && username !== '' && email !== '' && password !== '') {
         next();

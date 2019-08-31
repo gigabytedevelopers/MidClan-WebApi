@@ -31,6 +31,7 @@ class PostController {
         // create post images if exists
         if (postImages && postImages.length > 0) {
             postImages.forEach((img, index, images) => {
+                // not in use or push to post.postImages
                 const image = {
                     caption: title,
                     url: img

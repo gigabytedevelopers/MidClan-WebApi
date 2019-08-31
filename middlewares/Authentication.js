@@ -21,7 +21,7 @@ class Authentication {
                 req.token = token.substring(7, token.length);
 
                 const { tokens } = user;
-
+                // console.log(tokens);
                 next();
             });
         } catch (e) {
