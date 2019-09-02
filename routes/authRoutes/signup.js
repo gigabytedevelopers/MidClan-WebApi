@@ -24,6 +24,7 @@ const {
     requiredFields
 } = require('../../controllers/authcontrollers/signup');
 const Respond = require('../../services/responses');
+const Base64Handler = require('../../utilities/base64Handler');
 
 app.get('/signup/test', (req, res, next) => {
     res.json({
@@ -32,32 +33,36 @@ app.get('/signup/test', (req, res, next) => {
     })
 });
 
-app.post('/signup/user', userEmailExists, userUsernameExists, requiredFields, userSignup, (req, res, next) => {
-    Respond(res).success({
-        data: req.data,
-        token: req.token
-    })
+app.post('/signup/user', userEmailExists, userUsernameExists, requiredFields, Base64Handler.toImageFromReq, userSignup,
+    (req, res, next) => {
+        Respond(res).success({
+            data: req.data,
+            token: req.token
+        })
 })
 
-app.post('/signup/doctor', doctorEmailExists, doctorUsernameExists, requiredFields, doctorSignup, (req, res, next) => {
-    Respond(res).success({
-        data: req.data,
-        token: req.token
-    })
+app.post('/signup/doctor', doctorEmailExists, doctorUsernameExists, requiredFields, Base64Handler.toImageFromReq, doctorSignup,
+    (req, res, next) => {
+        Respond(res).success({
+            data: req.data,
+            token: req.token
+        })
 })
 
-app.post('/signup/pharmacist', pharmacistEmailExists, pharmacistUsernameExists, requiredFields, pharmacistSignup, (req, res, next) => {
-    Respond(res).success({
-        data: req.data,
-        token: req.token
-    })
+app.post('/signup/pharmacist', pharmacistEmailExists, pharmacistUsernameExists, requiredFields, Base64Handler.toImageFromReq, pharmacistSignup,
+    (req, res, next) => {
+        Respond(res).success({
+            data: req.data,
+            token: req.token
+        })
 })
 
-app.post('/signup/labtech', labTechEmailExists, labTechUsernameExists, requiredFields, labTechSignup, (req, res, next) => {
-    Respond(res).success({
-        data: req.data,
-        token: req.token
-    })
+app.post('/signup/labtech', labTechEmailExists, labTechUsernameExists, requiredFields, Base64Handler.toImageFromReq, labTechSignup,
+    (req, res, next) => {
+        Respond(res).success({
+            data: req.data,
+            token: req.token
+        })
 })
 
 module.exports = app;
