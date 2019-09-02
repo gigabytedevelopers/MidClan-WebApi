@@ -160,8 +160,8 @@
 
 ### Delete Post
 
-- Endpoint: `/api/v1/posts/comments/create`
-    - Action: `POST`
+- Endpoint: `/api/v1/posts/delete`
+    - Action: `DELETE`
     - HEADERS: `{'Authorization': 'Bearer YOUR_TOKEN', 'Content-Type': 'application/json'}` 
     - PARAMS:
 ```json
@@ -183,7 +183,7 @@
 
 ### Edit Post
 
-- Endpoint: `/api/v1/posts/comments/create`
+- Endpoint: `/api/v1/posts/edit`
     - Action: `POST`
     - HEADERS: `{'Authorization': 'Bearer YOUR_TOKEN', 'Content-Type': 'application/json'}` 
     - PARAMS:
@@ -209,7 +209,7 @@
         "commentsCount": 0,
         "likesCount": 0,
         "hasBookmarked": [
-          "5d65d18477cdd1ce4d9d8b6a" // id of users who bookmarked. (for timeline)
+          "5d65d18477cdd1ce4d9d8b6a", // id of users who bookmarked. (for timeline)
         ]
       },
       "title": "THIS UPDATE IS GREAT",
