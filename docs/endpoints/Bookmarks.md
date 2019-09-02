@@ -96,24 +96,27 @@
     "data": [
       {
         "author": {
-          "name": "Sam James",
+          "name": "Martins Victor",
           "imageUrl": "https://image.freepik.com/free-photo/blue-orange-cactus-vase-isolated_6607-236.jpg",
           "_id": "5d65d18477cdd1ce4d9d8b6a"
         },
         "meta": {
           "commentsCount": 0,
-          "likesCount": 0
+          "likesCount": 0,
+          "hasBookmarked": [
+            "5d65d18477cdd1ce4d9d8b6a" // id of users who bookmarked. (for timeline)
+          ]
         },
         "title": "Something awesome happened today",
         "status": "active",
         "postImages": [
-          "dsfdsfkljlkjkljkljd",
-          "skfldskfjsldkf",
-          "sdlfkjsldkjf"
+          "localhost:3000/krat@gmail.com/posts/5d6cc60a3e0214402d3dfa9d/fireman.jpg",
+          "localhost:3000/krat@gmail.com/posts/5d6cc60a3e0214402d3dfa9d/smallimage.gif"
         ],
-        "_id": "5d68591ed7eecfa017d338c9",
+        "_id": "5d6cc60a3e0214402d3dfa9d",
         "body": "Okay have a great one",
         "comments": [],
+        "created": "2019-09-02T07:34:34.343Z",
         "__v": 0
       }
     ]

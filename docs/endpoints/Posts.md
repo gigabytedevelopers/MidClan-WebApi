@@ -79,7 +79,18 @@
 {
     "title": "Hello world",
     "body": "this is a random post about this and that, here and there",
-    "postImages": ["dsfdsfkljlkjkljkljd", "skfldskfjsldkf", "sdlfkjsldkjf"]
+    "postImages": [
+      {
+        "str": "R0lGODlhPQBEAPeoAJosM//AwO/AwHVYZ/z595kzAP/s7P+goOXMv8+fhw/v739/f+8PD98fH/8mJl+fn/9ZWb8/PzWlwv///6wWGbI...", // base64 image string
+        "image_ext": "png",
+        "filename": "newfile"
+      },
+      {
+        "str": "R0lGODlhPQBEAPeoAJosM//AwO/AwHVYZ/z595kzAP/s7P+goOXMv8+fhw/v739/f+8PD98fH/8mJl+fn/9ZWb8/PzWlwv///6wWGbI...", // base64 image string
+        "image_ext": "png",
+        "filename": "newfile"
+      }
+    ]
 }
 ```
     - RESPONSE:
@@ -89,7 +100,7 @@
   "payload": {
     "data": {
       "author": {
-        "name": "Samson Siasia",
+        "name": "Martins Victor",
         "imageUrl": "https://image.freepik.com/free-photo/blue-orange-cactus-vase-isolated_6607-236.jpg",
         "_id": "5d65d18477cdd1ce4d9d8b6a"
       },
@@ -97,15 +108,16 @@
         "commentsCount": 0,
         "likesCount": 0
       },
-      "title": "Hello world",
-      "statu/mages": [
-        "dsfdsfkljlkjkljkljd",
-        "skfldskfjsldkf",
-        "sdlfkjsldkjf"
+      "title": "Something awesome happened today",
+      "status": "active",
+      "postImages": [
+        "{HOST}/krat@gmail.com/posts/5d6cc60a3e0214402d3dfa9d/fireman.jpg",
+        "{HOST}/krat@gmail.com/posts/5d6cc60a3e0214402d3dfa9d/smallimage.gif"
       ],
-      "_id": "5d674f3f2f893a7cd53836eb",
-      "body": "this is a random post about this and that, here and there",
-      "comments": []
+      "_id": "5d6cc60a3e0214402d3dfa9d",
+      "body": "Here's a bit of detail about it",
+      "comments": [],
+      "created": "2019-09-02T07:34:34.343Z"
     }
   }
 }
@@ -195,7 +207,10 @@
       },
       "meta": {
         "commentsCount": 0,
-        "likesCount": 0
+        "likesCount": 0,
+        "hasBookmarked": [
+          "5d65d18477cdd1ce4d9d8b6a" // id of users who bookmarked. (for timeline)
+        ]
       },
       "title": "THIS UPDATE IS GREAT",
       "status": "active",

@@ -1,6 +1,9 @@
+const base64Img = require('base64-img');
+
 const Respond = require('../../services/responses');
 const PostModel = require('../../models/post');
 const mongooseHandler = require('../../utilities/mongooseHandler');
+const Base64Handler = require('../../utilities/base64Handler');
 
 class PostController {
     /**
@@ -22,34 +25,50 @@ class PostController {
     static async createNewPost (req, res) {
         const { title, body, postImages } = req.body;
         const { user } = req;
+        const { host } = req.headers;
 
         if (!title || !body || !postImages) return Respond(res).error(
             400, 'missingParamsError', 'title and body is required, postImages (optional)'
         );
         // create new post instance
         const post = new PostModel({ title, body });
+        const imageUrls = [];
         // create post images if exists
         if (postImages && postImages.length > 0) {
-            postImages.forEach((img, index, images) => {
-                // not in use or push to post.postImages
-                const image = {
-                    caption: title,
-                    url: img
-                }
-                post.postImages = images;
-            });
-        }
-        // set post author
-        const postAuthor = {
-            name: `${user.firstname} ${user.lastname}`,
-            imageUrl: user.profilepicture,
-            _id: user._id
-        };
-        post.author = postAuthor;
-        // save post
-        await post.save();
+            postImages.forEach((img) => {
 
-        return Respond(res).success({ data: post });
+                const format = `data:image/${img.image_ext};base64,`
+                const formattedImgString = `${format}${img.str}`
+                const filename = img.filename
+                const path = `public/${user.email}/posts/${post._id}/`
+
+                base64Img.img(formattedImgString, path, filename, (err, filepath) => {
+                    if (err) throw err;
+                    console.log('writing done', filepath);
+                    const imageUrl = `${host}${filepath.substr(6, filepath.length)}`;
+                    imageUrls.push(imageUrl);
+                });
+
+            });
+            // TODO: find most efficient way to use await with delegated function
+            // - Need to abstract the file decode and  write function to Base64Handler class
+            // - await call to a static "toImage" method from Base64Handler class
+            // - assign value to post.postImages object.
+            // - using a setTimeout here cause the base64Img path only gets available after 500ms +
+            setTimeout(() => {
+                post.postImages = imageUrls;
+                console.log('now', post.postImages)
+                const postAuthor = {
+                    name: `${user.firstname} ${user.lastname}`,
+                    imageUrl: user.profilepicture,
+                    _id: user._id
+                };
+                post.author = postAuthor;
+
+                post.save();
+                return Respond(res).success({ data: post });
+            }, 1000)
+        }
     }
     /**
      * Comment on a post
