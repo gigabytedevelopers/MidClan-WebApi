@@ -9,51 +9,49 @@ const Respond = require('../../services/responses');
 const hasher = require('../../services/hasher');
 const jwt = require('jsonwebtoken');
 
-function emailExists(model){
+const emailExists = (model) => {
     return function (req, res, next) {
         // Check if the provided mail by the user is already registered with an account
-        model.find({
-                email: req.body.email
-            })
-            .then(data => {
-                if (data.length > 0) { // If a user with the provided email already exists
-                    Respond(res).error(500, 'accountCreationError', `A user has already been registered with the email  <b>${req.data.email}</b>`, '')
-                } else {
-                    next();
-                }
+        const { email } = req.body;
+        model.findOne({ email })
+            .then(user => {
+                user ? Respond(res).error(500, 'accountCreationError', `A user has already been registered with the email ${email}`, '')
+                    : next();
             })
             .catch(err => {
-                Respond(res).error(500, 'accountCreationError', `A user has already been registered with the email ${req.body.email}`, err);
-            })
+                Respond(res).error(500, 'accountCreationError', `${err}`, err);
+            });
     }
 }
 
-function usernameExists(model){
+const usernameExists = (model) => {
     return function (req, res, next) {
+        /**
+         * the next line is important for checking unique usernames
+         * so variations like Martins, maRtins, MArtins = martins.
+         * @type {string}
+         */
+        req.body.username = req.body.username.toLowerCase();
         // Check if the provided email by the user is already registered with an account
-        model.find({
-                username: req.body.username
-            })
-            .then(data => {
-                if (data.length > 0) { // If a user with the provided email already exists
-                    Respond(res).error(500, 'accountCreationError', `A user has already been registered with the username <b> ${req.data.username}</b>`, '')
-                } else {
-                    next();
-                }
+        const { username } = req.body;
+        model.findOne({ username })
+            .then(user => {
+                user ? Respond(res).error(500, 'accountCreationError', `username ${username} has been taken`, '')
+                    : next();
             })
             .catch(err => {
-                Respond(res).error(500, 'accountCreationError', `Could not create an account for ${req.body.username}`, err);
-            })
+                Respond(res).error(500, 'accountCreationError', `account creation failed: ${err}`, err);
+            });
     }
 }
 
-function requiredFields(req, res, next) {
+const requiredFields = (req, res, next) => {
     //Make sure the required fields has been provided, before proceeding to reguster the user
     const { firstname, lastname, username, email, password } = req.body;
 
     if (!firstname || !lastname || !username || !email || !password) {
         Respond(res).error(500, 'accountCreationError', `firstname, lastname, username, email and passwords must be provided`, '')
-    } else if (firstName !== '' && lastName !== '' && username !== '' && email !== '' && password !== '') {
+    } else if (firstname !== '' && lastname !== '' && username !== '' && email !== '' && password !== '') {
         next();
     } else {
         Respond(res).error(500, 'accountCreationError', `firstname, lastname, username, email and passwords must be provided`, '')
@@ -61,20 +59,21 @@ function requiredFields(req, res, next) {
 }
 
 let userObj = { // This is done so, other information that are not needed won't b saved in the database
-            firstname: '',
-            lastname: '',
-            username: '',
-            email: '',
-            mobileno: '',
-            address: '',
-            state: '',
-            country: '',
-            dob: '',
-            gender: '',
-            password: '',
-        }
+    firstname: '',
+    lastname: '',
+    username: '',
+    email: '',
+    profilepicture: '',
+    mobileno: '',
+    address: '',
+    state: '',
+    country: '',
+    dob: '',
+    gender: '',
+    password: '',
+}
 
-function signUp(model, obj){
+const signUp = (model, obj) => {
     return function (req, res, next) {
         const data = req.body;
         obj.firstname = data.firstname;
@@ -84,16 +83,20 @@ function signUp(model, obj){
         obj.mobileno = data.mobileno;
         obj.address = data.address;
         obj.state = data.state;
+        obj.profilepicture = data.profilepicture;
         obj.country = data.country;
         obj.dob = data.dob;
         obj.gender = data.gender;
         obj.password = hasher(data.password, data.email).hash //The password is always hashed using the email as the salt
+
         model.create(obj)
             .then(data => {
                 let savedData = data;
                 savedData = Object.assign(savedData)._doc;
                 delete savedData.password;
                 //Sign an authentication token for the user
+                // Instead of the email of the user spelt the reverse way is used as the JWT key
+                // We're using a hardcoded JWT_SECRET in our ENV.
                 const token = jwt.sign({
                     firstname: savedData.firstname,
                     username: savedData.username,
@@ -101,13 +104,6 @@ function signUp(model, obj){
                 }, process.env.JWT_SECRET, {
                     expiresIn: '30d'
                 });
-                /*const token = jwt.sign({
-                    firstname: savedData.firstname,
-                    username: savedData.username,
-                    email: savedData.email
-                }, savedData.email.split('').reverse().join(''), {
-                    expiresIn: '30d'
-                }); */ //The email of the user spelt the reverse way is used as the JWT key
                 req.data = savedData;
                 req.token = token;
                 next();

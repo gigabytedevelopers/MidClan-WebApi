@@ -76,25 +76,29 @@ A typical success response from the MidClan Auth Server should look as shown bel
 
 ```javascript
 {
-    success: true,
-    payload: {
-        data: {
-            firstname: "Femi",
-            lastname: "Funso",
-            username: "FemiFunso4",
-            email: "femi4@gmail.com",
-            mobileno: 8133282428,
-            address: "2, okegbenro street",
-            state: "Lagos",
-            country: "Nigeria",
-            dob: "16, Aug",
-            gender: "Male",
-            _id: "5d4862fedc4d8720930d9f04",
-            created: "2019-08-05T17:10:22.487Z",
-            __v: 0
-        },
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdG5hbWUiOiJGZW1pIiwidXNlcm5hbWUiOiJGZW1pRnVuc280IiwiZW1haWwiOiJmZW1pNEBnbWFpbC5jb20iLCJpYXQiOjE1NjUwMjUwNzYsImV4cCI6MTU2NzYxNzA3Nn0.gg2K_CGLiNPnXRyeoxbUgI88X4vqYQKpKNSVCX16M7U"
-    }
+  "success": true,
+  "payload": {
+    "data": {
+      "firstname": "Sammy",
+      "lastname": "Jenny",
+      "username": "sammy",
+      "email": "sammy@gmail.com",
+      "mobileno": 0,
+      "profilepicture": "localhost:3000/sammy@gmail.com/profile_pic/profilepicture.gif",
+      "dob": "",
+      "gender": "",
+      "bloodgroup": "",
+      "genotype": "",
+      "height": "",
+      "weight": "",
+      "bp": "",
+      "bookmarks": [],
+      "_id": "5d6d7848a2988401361f0353",
+      "created": "2019-09-02T20:15:04.273Z",
+      "__v": 0
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdG5hbWUiOiJTYW1teSIsInVzZXJuYW1lIjoic2FtbXkiLCJlbWFpbCI6InNhbW15QGdtYWlsLmNvbSIsImlhdCI6MTU2NzQ1NTMwNCwiZXhwIjoxNTcwMDQ3MzA0fQ.F9uuSDzduXNQRIqdHm_cgKV5-Gpt6yViaPxZeB9xsc0"
+  }
 }
 ```
 
@@ -120,16 +124,21 @@ To signup, a `POST` request with a body that has the following fields must be se
 
 ```javascript
 {
-  firstname : "Femi", #required
-  lastname : "Funso", #required
-  username : "FemiFunso4", #required
-  email : "femi4@gmail.com", #required
-  mobileno : "08133282428", #optional
-  address : "2, okegbenro street", #optional
-  state : "Lagos", #optional
-  country : "Nigeria", #optional
-  dob: "16, Aug", #optional
-  gender : "Male", #optional
+  firstname : "Femi", // required
+  lastname : "Funso", // required
+  username : "FemiFunso4", // required
+  email : "femi4@gmail.com", // required
+  mobileno : "08133282428", // optional
+  address : "2, okegbenro street", // optional
+  state : "Lagos",  // optional
+  country : "Nigeria", // optional
+  dob: "16, Aug", // optional
+  gender : "Male", // optional
+  profilepicture: {
+    "str": "R0lGODlhPQBEAPeoAJosM//AwO/AwHVYZ/z595kzAP/s7P+goOXMv8+fhw/v739/f+8PD98fH/8mJl+fn/9ZWb8/PzWlwv///6wWGbImAPgTEMImI..", // base64Str
+    "image_ext": "png",
+    "filename": "profilepicture"
+  }, //optional
   password : "FemiFunso" #required
 }
 ```
@@ -138,25 +147,29 @@ on successful account creation, a response is gotten from the server as such;
 
 ```javascript
 {
-    success: true,
-    payload: {
-        data: {
-            firstname: "Femi",
-            lastname: "Funso",
-            username: "FemiFunso4",
-            email: "femi4@gmail.com",
-            mobileno: 8133282428,
-            address: "2, okegbenro street",
-            state: "Lagos",
-            country: "",
-            dob: "16, Aug",
-            gender: "Male",
-            _id: "5d4862fedc4d8720930d9f04",
-            created: "2019-08-05T17:10:22.487Z",
-            __v: 0
-        },
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdG5hbWUiOiJGZW1pIiwidXNlcm5hbWUiOiJGZW1pRnVuc280IiwiZW1haWwiOiJmZW1pNEBnbWFpbC5jb20iLCJpYXQiOjE1NjUwMjUwNzYsImV4cCI6MTU2NzYxNzA3Nn0.gg2K_CGLiNPnXRyeoxbUgI88X4vqYQKpKNSVCX16M7U"
-    }
+  "success": true,
+  "payload": {
+    "data": {
+      "firstname": "Sammy",
+      "lastname": "Jenny",
+      "username": "sammy",
+      "email": "sammy@gmail.com",
+      "mobileno": 0,
+      "profilepicture": "localhost:3000/sammy@gmail.com/profile_pic/profilepicture.gif",
+      "dob": "",
+      "gender": "",
+      "bloodgroup": "",
+      "genotype": "",
+      "height": "",
+      "weight": "",
+      "bp": "",
+      "bookmarks": [],
+      "_id": "5d6d7848a2988401361f0353",
+      "created": "2019-09-02T20:15:04.273Z",
+      "__v": 0
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdG5hbWUiOiJTYW1teSIsInVzZXJuYW1lIjoic2FtbXkiLCJlbWFpbCI6InNhbW15QGdtYWlsLmNvbSIsImlhdCI6MTU2NzQ1NTMwNCwiZXhwIjoxNTcwMDQ3MzA0fQ.F9uuSDzduXNQRIqdHm_cgKV5-Gpt6yViaPxZeB9xsc0"
+  }
 }
 ```
 
@@ -164,8 +177,8 @@ on successful account creation, a response is gotten from the server as such;
 To login, a `POST` request with a body that has the following fields must be sent to the server
 ```javascript
 {
-  email : "femi4@gmail.com",
-  password : "FemiFunso"
+  "email" : "femi4@gmail.com",
+  "password" : "FemiFunso"
 }
 ```
 
