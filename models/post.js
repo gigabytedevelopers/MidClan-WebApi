@@ -26,7 +26,7 @@ const PostSchema = new Schema({
         },
         imageUrl: {
             type: String,
-            default: 'https://image.freepik.com/free-photo/blue-orange-cactus-vase-isolated_6607-236.jpg'
+            default: ''
         },
         _id: { type: Schema.Types.ObjectId }
     },
@@ -36,12 +36,6 @@ const PostSchema = new Schema({
     },
     postImages: {
         type: Array,
-        default: [
-            {
-                caption: { type: String, default: '', trim: true },
-                url: { type: String, default: 'https://image.freepik.com/free-photo/blue-orange-cactus-vase-isolated_6607-236.jpg' }
-            }
-        ]
     },
     comments: [
         {
@@ -63,7 +57,12 @@ const PostSchema = new Schema({
     ],
     meta: {
         commentsCount: { type: Number, default: 0 },
-        likesCount: { type: Number, default: 0 }
+        likesCount: { type: Number, default: 0 },
+        hasBookmarked: { type: Array }
+    },
+    created: {
+        type: Date,
+        default: Date.now
     }
 })
 

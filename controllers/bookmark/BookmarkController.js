@@ -26,6 +26,7 @@ class BookmarkController {
                 if (bookmarkExists) return Respond(res).error(
                     400, 'badRequest', 'bookmark already exists'
                 );
+                post.meta.hasBookmarked.push(user._id.toString());
                 user.bookmarks.push(post);
                 user.save();
                 return Respond(res).success({ data: user.bookmarks });

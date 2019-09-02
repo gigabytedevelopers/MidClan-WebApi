@@ -2,7 +2,9 @@
  * @package - MidClan - WebApi
  * @description - This is the Web  API for the MidClan project
  */
-const createError = require('http-errors');
+global.__basedir = __dirname;
+
+// const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
