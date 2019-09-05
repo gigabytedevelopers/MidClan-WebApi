@@ -15,7 +15,7 @@ const cors = require("cors");
 const corsConfig = require("./config/cors");
 const Respond = require('./services/responses');
 
-
+const socketEvents = require('./services/socketEvents');
 const indexRoute = require('./routes/index');
 // var usersRouter = require('./routes/users');
 
@@ -30,6 +30,7 @@ const techniciansRoute = require('./routes/technicianRoutes/index');
 const doctorsRoute = require('./routes/doctorRoutes/index');
 const postsRoute = require('./routes/postRoutes/index');
 const bookmarkRoute = require('./routes/bookmarkRoutes/index');
+const chatRoute = require('./routes/chatRoutes/index');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -89,6 +90,7 @@ app.use('/api/v1/technicians/', techniciansRoute);
 app.use('/api/v1/doctors/', doctorsRoute);
 app.use('/api/v1/posts/', postsRoute);
 app.use('/api/v1/bookmark/', bookmarkRoute);
+app.use('/api/v1/chat', chatRoute);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -103,9 +105,13 @@ if (app.get('env') === 'development') {
 } else {
   port = process.env.PORT;
 }
+const server = app.listen(process.env.TEST_PORT);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 })
+
+const io = require('socket.io').listen(server);
+socketEvents(io);
 
 module.exports = app;
