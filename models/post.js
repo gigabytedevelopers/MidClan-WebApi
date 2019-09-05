@@ -3,8 +3,8 @@ const { Schema } = mongoose;
 
 /**
  * Post Schema
- * might appear to have a complex structure
- * this is so we eliminate the need to populate queries
+ * this currently has a non-scallable structure
+ * we'd need to refactor to use references and ObjectIds for comment and author
  * until we're ready to scale.
  * @type {Schema}
  */

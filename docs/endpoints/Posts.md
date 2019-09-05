@@ -127,7 +127,7 @@
 
 ### Comment on Post
 
-- Endpoint: `/api/v1/posts/comments/create`
+- Endpoint: `/api/v1/posts/comment/create`
     - Action: `POST`
     - HEADERS: `{'Authorization': 'Bearer YOUR_TOKEN', 'Content-Type': 'application/json'}` 
     - PARAMS:
