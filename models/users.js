@@ -35,6 +35,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: 'https://image.freepik.com/free-photo/blue-orange-cactus-vase-isolated_6607-236.jpg'
     },
+    /**
+     * user subscription types
+     * - Free - Pass - Prime - Silver - Gold - Premium - Diamond
+     *
+     */
+    subscription: { type: String },
     dob: {
         type: String,
         trim: true,

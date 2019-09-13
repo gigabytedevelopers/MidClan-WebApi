@@ -9,7 +9,7 @@ const Respond = require('../../services/responses');
 const hasher = require('../../services/hasher');
 const jwt = require('jsonwebtoken');
 
-function validatePassword(model) {
+const validatePassword = (model) => {
     return function(req, res, next) {
         let data = req.body;
         let email = data.email;
@@ -38,7 +38,7 @@ function validatePassword(model) {
     }
 }
 
-function generateToken(req, res, next) {
+const generateToken = (req, res, next) => {
     // This function generates an authentication token for an already veriified user who is about to log into his/her account
     let data = req.userData;
     const token = jwt.sign({
@@ -49,14 +49,6 @@ function generateToken(req, res, next) {
     }, process.env.JWT_SECRET, {
         expiresIn: '30d'
     });
-    /* const token = jwt.sign({
-        firstname: data.firstname,
-        username: data.username,
-        email: data.email
-    }, data.email.split('').reverse().join(''), {
-        expiresIn: '30d'
-    }); */ //The email of the user spelt the reverse way is used as the JWT key
-
     // Delete password from the data to be returned to the user
     let savedData = Object.assign(data)._doc
     delete savedData.password

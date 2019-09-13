@@ -50,7 +50,7 @@ const requiredFields = (req, res, next) => {
     const { firstname, lastname, username, email, password } = req.body;
 
     if (!firstname || !lastname || !username || !email || !password) {
-        Respond(res).error(500, 'accountCreationError', `firstname, lastname, username, email and passwords must be provided`, '')
+        Respond(res).error(400, 'accountCreationError', `firstname, lastname, username, email and passwords must be provided`, '')
     } else if (firstname !== '' && lastname !== '' && username !== '' && email !== '' && password !== '') {
         next();
     } else {

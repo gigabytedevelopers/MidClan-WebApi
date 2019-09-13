@@ -168,10 +168,28 @@ class PostController {
 
                 return post;
             });
-
             return Respond(res).success({ data: post });
         }
         return Respond(res).error(400, 'mongooseModelError', 'Invalid ID format');
+    }
+    /**
+     * Share post
+     * @param  {object} req [request object]
+     * @param  {object} res [response object]
+     * @return {json}
+     */
+    static async sharePost (req, res) {
+        const { user } = req;
+        const { postId } = req.body;
+        const { shareComment } = req.body;
+
+        if (mongooseHandler.checkIsValidID(postId)) {
+            const postToShare = await PostModel.findOne({ _id: postId }).then(post => post);
+            // const sharePost = new PostModel({
+
+            // });
+            eval(require('locus'));
+        }
     }
 }
 

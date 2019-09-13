@@ -30,6 +30,18 @@ const PostSchema = new Schema({
         },
         _id: { type: Schema.Types.ObjectId }
     },
+    isShared: {
+        type: Boolean,
+        default: false
+    },
+    shareData: {
+        originalPost: {
+            author: { name: String },
+            postImage: String,
+            postedAt: { type: Date },
+            body: String
+        }
+    },
     body: {
         type: String,
         trim: true,
@@ -58,6 +70,7 @@ const PostSchema = new Schema({
     meta: {
         commentsCount: { type: Number, default: 0 },
         likesCount: { type: Number, default: 0 },
+        shareCount: { type: Number, default: 0 },
         hasBookmarked: { type: Array }
     },
     created: {

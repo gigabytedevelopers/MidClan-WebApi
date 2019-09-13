@@ -33,7 +33,7 @@ app.get('/signup/test', (req, res, next) => {
     })
 });
 
-app.post('/signup/user', userEmailExists, userUsernameExists, requiredFields, Base64Handler.toImageFromReq, userSignup,
+app.post('/signup/user', requiredFields, userEmailExists, userUsernameExists, Base64Handler.toImageFromReq, userSignup,
     (req, res, next) => {
         Respond(res).success({
             data: req.data,
@@ -41,7 +41,7 @@ app.post('/signup/user', userEmailExists, userUsernameExists, requiredFields, Ba
         })
 })
 
-app.post('/signup/doctor', doctorEmailExists, doctorUsernameExists, requiredFields, Base64Handler.toImageFromReq, doctorSignup,
+app.post('/signup/doctor', requiredFields, doctorEmailExists, doctorUsernameExists, Base64Handler.toImageFromReq, doctorSignup,
     (req, res, next) => {
         Respond(res).success({
             data: req.data,
@@ -49,7 +49,7 @@ app.post('/signup/doctor', doctorEmailExists, doctorUsernameExists, requiredFiel
         })
 })
 
-app.post('/signup/pharmacist', pharmacistEmailExists, pharmacistUsernameExists, requiredFields, Base64Handler.toImageFromReq, pharmacistSignup,
+app.post('/signup/pharmacist', requiredFields, pharmacistEmailExists, pharmacistUsernameExists, Base64Handler.toImageFromReq, pharmacistSignup,
     (req, res, next) => {
         Respond(res).success({
             data: req.data,
@@ -57,7 +57,7 @@ app.post('/signup/pharmacist', pharmacistEmailExists, pharmacistUsernameExists, 
         })
 })
 
-app.post('/signup/labtech', labTechEmailExists, labTechUsernameExists, requiredFields, Base64Handler.toImageFromReq, labTechSignup,
+app.post('/signup/labtech', requiredFields, labTechEmailExists, labTechUsernameExists, Base64Handler.toImageFromReq, labTechSignup,
     (req, res, next) => {
         Respond(res).success({
             data: req.data,
