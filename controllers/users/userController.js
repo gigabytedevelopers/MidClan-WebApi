@@ -21,6 +21,9 @@ class UserController {
      */
     static async getSingleUser (req, res) {
         const { id } = req.params;
+        if (!id) return Respond(res).error(
+            400, 'missingParamsError', 'id is required'
+        );
         if (mongooseHandler.checkIsValidID(id)) {
             const user = await userModel.findOne({ _id: id }).then(data => data);
             if (!user) {
