@@ -1,4 +1,5 @@
 const Respond = require('../../services/responses');
+const Subscription = require('../../models/subscription');
 
 class SubscriptionController {
     /**
@@ -16,6 +17,11 @@ class SubscriptionController {
         );
         user.subscription = subscription
         user.save()
+    }
+
+    static async getSubscriptions () {
+        const subscriptions = await Subscription.findAll();
+        return Respond(res).success({ data: subscriptions });
     }
 }
 
