@@ -1,37 +1,22 @@
-const base64Img = require('base64-img');
+const { writeImage } = require('./imageWriter');
 
 class Base64Handler {
     static async toImage ({ str, ext, filename, path }) {
-        const format = `data:image/${ext};base64,`;
-        const formattedString = `${format}${str}`
-
-        return base64Img.img(formattedString, path, filename, (err, filepath) => {
-            if (err) throw err;
-            console.log('writing done', filepath);
-            return filepath;
-        });
+        return writeImage(`data:image/${ext};base64,${str}`, path, filename);
     }
 
     static async toImageFromReq (req, res, next) {
         const { profilepicture } = req.body;
-
-        if (profilepicture) {
-            const { host } = req.headers;
-
-            let { str, image_ext, filename, path } = profilepicture;
-            const format = `data:image/${image_ext};base64,` // format
-            path = `public/${req.body.email}/profile_pic/`
-            const formattedString = `${format}${str}`
-
-            base64Img.img(formattedString, path, filename, (err, filepath) => {
-                if (err) throw err;
-                // attach decoded saved image to request body
-                req.body.profilepicture = `${host}${filepath.substr(6, filepath.length)}`;
-
-                next();
-            });
-        } else {
-            next();
+        if (!profilepicture) return next();
+        try {
+            const { str, image_ext, filename } = profilepicture;
+            const directory = `public/${encodeURIComponent(req.body.email)}/profile_pic/`;
+            const filepath = await Base64Handler.toImage({ str, ext: image_ext, filename, path: directory });
+            req.body.profilepicture = `${req.headers.host}/${filepath.substring(7)}`;
+            return next();
+        } catch (error) {
+            error.status = 400;
+            return next(error);
         }
     }
 }

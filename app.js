@@ -113,7 +113,8 @@ app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 })
 
-const io = require('socket.io').listen(server);
+// Keep Engine.IO 3 handshakes for existing Socket.IO 2 clients during migration.
+const io = new (require('socket.io').Server)(server, { allowEIO3: true });
 socketEvents(io);
 
 module.exports = app;
