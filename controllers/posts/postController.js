@@ -188,7 +188,6 @@ class PostController {
             // const sharePost = new PostModel({
 
             // });
-            eval(require('locus'));
         }
     }
 }
