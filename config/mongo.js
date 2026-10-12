@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-// in .env define MONGODB_URI="mongodb://heroku_lrt6r3tx:md64rsngoqneflgib1pkdbel84@ds155577.mlab.com:55577/heroku_lrt6r3tx"
 const url = app.get('env') == "production" ? process.env.MONGODB_URI : "mongodb://localhost:27017/MidClan-Api";
 
 console.log("Environment is ", app.get('env'));
@@ -12,7 +11,9 @@ mongoose.connect(url, {
     .then(success => console.log("Connection to mongoose successful"))
     .catch(err => console.error("Could not connect to mongoose ", err));
 
-mongoose.set('useCreateIndex', true);
+// Mongoose 6 creates indexes without the removed useCreateIndex option.
+// Reject user-supplied query operators in filters.
+mongoose.set('sanitizeFilter', true);
 
 process.on('exit', () => {
     // mongoose.close();
